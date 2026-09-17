@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="240mm"
+   height="120mm"
+   viewBox="0 0 240 120"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (unknown)"
+   sodipodi:docname="figure.svg">
+  <defs id="defs2">
+    <marker id="arrow" orient="auto-start-reverse" markerUnits="userSpaceOnUse"
+            markerWidth="4.5" markerHeight="4.5" refX="3.6" refY="2.25">
+      <path d="M0,0 L4.5,2.25 L0,4.5 L1.2,2.25 Z" fill="#000000" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.99437388"
+     inkscape:cx="284.27627"
+     inkscape:cy="182.72055"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showborder="true"
+     width="200mm"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="2520"
+     inkscape:window-height="995"
+     inkscape:window-x="20"
+     inkscape:window-y="65"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid815"
+       units="mm"
+       spacingx="10"
+       spacingy="10"
+       empspacing="4"
+       dotted="false" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1" />
+
+  <!-- =========================================================
+       Palette of ready-made objects, parked BELOW the page so it
+       never appears in the exported PDF (export uses the page area
+       only). Copy one onto the page, or copy an arrow and use
+       Paste Style (Ctrl+Shift+V) to put arrowheads on your lines.
+       ========================================================= -->
+  <g inkscape:label="palette (off-page, not exported)">
+    <!-- NB: keep this palette free of TEXT objects. Off-page graphics are
+         clipped out of the exported PDF, but Inkscape's LaTeX export writes
+         every text object into the .pdf_tex regardless of position, so any text
+         here would leak into the document. -->
+
+    <!-- arrow (copy this and use Paste Style to arrow a line) -->
+    <path d="M10,144 L70,144" fill="none" stroke="#000" stroke-width="0.7"
+          marker-end="url(#arrow)" />
+    <!-- double-headed arrow -->
+    <path d="M90,144 L150,144" fill="none" stroke="#000" stroke-width="0.7"
+          marker-start="url(#arrow)" marker-end="url(#arrow)" />
+
+    <!-- 2D axes, first quadrant (both arms 55 long) -->
+    <g inkscape:label="axes-2d-quadrant">
+      <path d="M15,215 L70,215" fill="none" stroke="#000" stroke-width="0.7"
+            marker-end="url(#arrow)" />
+      <path d="M15,215 L15,160" fill="none" stroke="#000" stroke-width="0.7"
+            marker-end="url(#arrow)" />
+    </g>
+
+    <!-- 2D axes, full: lines extend equally into the negative side, arrowhead
+         only on the positive (right / top) end (origin at 122,187; arms 42) -->
+    <g inkscape:label="axes-2d-full">
+      <path d="M80,187 L164,187" fill="none" stroke="#000" stroke-width="0.7"
+            marker-end="url(#arrow)" />
+      <path d="M122,229 L122,145" fill="none" stroke="#000" stroke-width="0.7"
+            marker-end="url(#arrow)" />
+    </g>
+
+    <!-- 3D axes, oblique (origin 200,205; all three arms 40 long) -->
+    <g inkscape:label="axes-3d">
+      <path d="M200,205 L240,205" fill="none" stroke="#000" stroke-width="0.7"
+            marker-end="url(#arrow)" />
+      <path d="M200,205 L200,165" fill="none" stroke="#000" stroke-width="0.7"
+            marker-end="url(#arrow)" />
+      <path d="M200,205 L171.7,233.3" fill="none" stroke="#000" stroke-width="0.7"
+            marker-end="url(#arrow)" />
+    </g>
+  </g>
+</svg>

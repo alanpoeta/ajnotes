@@ -1,0 +1,573 @@
+% ====================================================================
+% Language switch.
+% Load this package with one option to set the document language:
+%   \usepackage[german]{ajnotes}   % (Swiss) standard German  -- default
+%   \usepackage[english]{ajnotes}  % American English
+% This controls babel, siunitx number formatting and all the labels
+% (theorem/definition/lecture/exercise names) printed in the PDF.
+% ====================================================================
+\newif\iflangenglish
+\DeclareOption{german}{\langenglishfalse}
+\DeclareOption{english}{\langenglishtrue}
+\ExecuteOptions{german}
+\ProcessOptions\relax
+
+\iflangenglish
+    \newcommand{\lbltheorem}{Theorem}
+    \newcommand{\lbldefinition}{Definition}
+    \newcommand{\lblproperty}{Property}
+    \newcommand{\lbllemma}{Lemma}
+    \newcommand{\lblprop}{Proposition}
+    \newcommand{\lblcorollary}{Corollary}
+    \newcommand{\lbllaw}{Law}
+    \newcommand{\lblpostulate}{Postulate}
+    \newcommand{\lblconclusion}{Conclusion}
+    \newcommand{\lblbonus}{Bonus}
+    \newcommand{\lblconjecture}{Conjecture}
+    \newcommand{\lblexample}{Example}
+    \newcommand{\lblunexample}{Non-example}
+    \newcommand{\lblnotation}{Notation}
+    \newcommand{\lblpreviouslyseen}{As previously seen}
+    \newcommand{\lblrecap}{Recap}
+    \newcommand{\lblintermezzo}{Intermezzo}
+    \newcommand{\lblremark}{Remark}
+    \newcommand{\lblnote}{Note}
+    \newcommand{\lblobserve}{Observe}
+    \newcommand{\lblintuition}{Intuition}
+    \newcommand{\lblpractical}{Practical}
+    \newcommand{\lblproblem}{Problem}
+    \newcommand{\lblterminology}{Terminology}
+    \newcommand{\lblapplication}{Application}
+    \newcommand{\lblexercise}{Exercise}
+    \newcommand{\lblquestion}{Question}
+    \newcommand{\lbllecture}{Lecture}
+    \newcommand{\lblproblemset}{Problem Set}
+    % Abbreviated month + weekday names for the localized lecture date (see \lecture).
+    \newcommand{\ajmonth}[1]{\ifcase\numexpr#1\relax\or Jan\or Feb\or Mar\or Apr\or May\or Jun\or Jul\or Aug\or Sep\or Oct\or Nov\or Dec\fi}
+    \newcommand{\ajweekday}[1]{\ifcase#1 Mon\or Tue\or Wed\or Thu\or Fri\or Sat\or Sun\fi}
+\else
+    \newcommand{\lbltheorem}{Satz}
+    \newcommand{\lbldefinition}{Definition}
+    \newcommand{\lblproperty}{Eigenschaft}
+    \newcommand{\lbllemma}{Lemma}
+    \newcommand{\lblprop}{Proposition}
+    \newcommand{\lblcorollary}{Korollar}
+    \newcommand{\lbllaw}{Gesetz}
+    \newcommand{\lblpostulate}{Postulat}
+    \newcommand{\lblconclusion}{Folgerung}
+    \newcommand{\lblbonus}{Bonus}
+    \newcommand{\lblconjecture}{Vermutung}
+    \newcommand{\lblexample}{Beispiel}
+    \newcommand{\lblunexample}{Unbeispiel}
+    \newcommand{\lblnotation}{Notation}
+    \newcommand{\lblpreviouslyseen}{Wie zuvor gesehen}
+    \newcommand{\lblrecap}{Zusammenfassung}
+    \newcommand{\lblintermezzo}{Intermezzo}
+    \newcommand{\lblremark}{Bemerkung}
+    \newcommand{\lblnote}{Anmerkung}
+    \newcommand{\lblobserve}{Beobachtung}
+    \newcommand{\lblintuition}{Intuition}
+    \newcommand{\lblpractical}{Praktischer Hinweis}
+    \newcommand{\lblproblem}{Problem}
+    \newcommand{\lblterminology}{Terminologie}
+    \newcommand{\lblapplication}{Anwendung}
+    \newcommand{\lblexercise}{Aufgabe}
+    \newcommand{\lblquestion}{Frage}
+    \newcommand{\lbllecture}{Vorlesung}
+    \newcommand{\lblproblemset}{Übungsserie}
+    \newcommand{\ajmonth}[1]{\ifcase\numexpr#1\relax\or Jan\or Feb\or Mär\or Apr\or Mai\or Jun\or Jul\or Aug\or Sep\or Okt\or Nov\or Dez\fi}
+    \newcommand{\ajweekday}[1]{\ifcase#1 Mo\or Di\or Mi\or Do\or Fr\or Sa\or So\fi}
+\fi
+
+% Some basic packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+% Per-machine settings, read before babel so the regional variants below can be
+% overridden. See the \authorname block near the end of this file for what env.tex
+% is and where it lives.
+% Regional variants, overridable in env.tex. The babel ones take any dialect that
+% babel knows (american/british/…, nswissgerman/ngerman/naustrian/…); the siunitx
+% ones take one of its nine locales: BR DE FR IT PL SI UK US ZA.
+\newcommand{\ajenglishvariant}{american}
+\newcommand{\ajgermanvariant}{nswissgerman}
+% siunitx locales: empty means "use the number formatting below" rather than a
+% country preset. Set one in env.tex to take siunitx's regional defaults instead.
+\newcommand{\ajenglishlocale}{}
+\newcommand{\ajgermanlocale}{}
+\newcommand{\ajdefaultauthor}{\TeX\ notes}
+\newcommand{\authorname}{\ajdefaultauthor}
+\IfFileExists{./env.tex}
+    {\input{./env.tex}}
+    {\IfFileExists{ajnotes/env.tex}{\input{ajnotes/env.tex}}{}}
+
+% shorthands=off for German: babel's German dialects make " an active
+% character (for "a -> ä, "` -> „, "- -> a hyphenation point). Accented letters
+% are typed directly as UTF-8 here, so the only effect is that an ordinary
+% quotation mark before a letter silently turns into an umlaut — no error, just
+% wrong output. Turning shorthands off restores " to a plain character.
+\iflangenglish
+    \expandafter\usepackage\expandafter[\ajenglishvariant]{babel}
+\else
+    \expandafter\usepackage\expandafter[\ajgermanvariant\string,shorthands=off]{babel}
+\fi
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+% A list that opens a theorem-like environment would otherwise be pulled onto
+% the run-in heading ("Beispiel. • first item"), leaving the first item's
+% margins out of step with the rest. \leavevmode ends that heading's paragraph
+% first, so the list always starts on its own line. Harmless elsewhere: in
+% ordinary text the paragraph is already open, so it does nothing.
+\setlist{before=\leavevmode}
+
+\pdfminorversion=7
+
+% Don't indent paragraphs, leave some space between them
+\usepackage{parskip}
+
+% Hide page number when page is empty
+\usepackage{emptypage}
+\usepackage{subcaption}
+\usepackage{multicol}
+\usepackage{xcolor}
+
+% Other font I sometimes use.
+% \usepackage{cmbright}
+
+% Math stuff
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+% Fancy script capitals
+\usepackage{mathrsfs}
+\usepackage{cancel}
+% Bold math
+\usepackage{bm}
+% Some shortcuts.
+%
+% \xspace adds a space after the macro in text mode, but only when one is
+% actually wanted: it looks ahead and stays out of the way before punctuation,
+% closing delimiters, another space, or the end of a group. So "$\Z$ ist" can be
+% written \Z ist (no trailing backslash) while \Z, and \Z. still close up.
+% In math mode it does nothing, so $\Z^n$ is unaffected.
+\usepackage{xspace}
+% xspace's default exception list covers , . ; : ! ? ' ) ~ / - and a few control
+% sequences, but not closing brackets or braces, where a space is equally wrong.
+\xspaceaddexceptions{] \} \ldots \dots}
+\newcommand\N{\ensuremath{\mathbb{N}}\xspace}
+\newcommand\R{\ensuremath{\mathbb{R}}\xspace}
+\newcommand\Z{\ensuremath{\mathbb{Z}}\xspace}
+\renewcommand\O{\ensuremath{\emptyset}\xspace}
+\newcommand\Q{\ensuremath{\mathbb{Q}}\xspace}
+\newcommand\C{\ensuremath{\mathbb{C}}\xspace}
+
+% Easily typeset systems of equations
+\usepackage{systeme}
+
+\let\epsilon\varepsilon
+
+% Add \contra symbol to denote contradiction
+\usepackage{stmaryrd} % for \lightning
+\newcommand\contra{\scalebox{1.5}{$\lightning$}}
+
+% \let\phi\varphi
+
+% Command for short corrections
+% Usage: 1+1=\correct{3}{2}
+
+\definecolor{correct}{HTML}{009900}
+\newcommand\correct[2]{\ensuremath{\:}{\color{red}{#1}}\ensuremath{\to }{\color{correct}{#2}}\ensuremath{\:}}
+\newcommand\green[1]{{\color{correct}{#1}}}
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+% hide parts
+\newcommand\hide[1]{}
+
+% si unitx
+\usepackage{siunitx}
+% House number formatting, used whichever language the document is in. A decimal
+% point always (the German locale would otherwise switch to a comma) and a dot
+% product for exponents.
+\sisetup{
+    output-decimal-marker = {.},
+    group-separator       = {,},
+    exponent-product      = {\ensuremath{\cdot}},
+    inter-unit-product    = {\,},
+}
+
+% If env.tex chose a locale for the language in use, apply it on top — siunitx's
+% presets set output-decimal-marker, exponent-product and inter-unit-product, so
+% the user's regional choice wins over the defaults above. With no locale set
+% (the default) the block above stands.
+\iflangenglish
+    \edef\ajlocale{\ajenglishlocale}
+\else
+    \edef\ajlocale{\ajgermanlocale}
+\fi
+\ifx\ajlocale\empty\else
+    \edef\ajtemp{\noexpand\sisetup{locale = \ajlocale}}
+    \ajtemp
+\fi
+
+% Environments
+% For box around Definition, Theorem, \ldots
+\usepackage{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em}
+\theoremstyle{definition}
+% Boxed, numbered environments.
+% 'theorem' is the master counter, numbered by section (Theorem 2.1, 2.2, ...).
+% All other results share that counter, so everything interleaves in one
+% unambiguous sequence (Definition 2.1, Theorem 2.2, Lemma 2.3, ...).
+\newmdtheoremenv[nobreak=true]{theorem}{\lbltheorem}[section]
+\newmdtheoremenv[nobreak=true]{definition}[theorem]{\lbldefinition}
+\newmdtheoremenv[nobreak=true]{property}[theorem]{\lblproperty}
+\newmdtheoremenv[nobreak=true]{lemma}[theorem]{\lbllemma}
+\newmdtheoremenv[nobreak=true]{prop}[theorem]{\lblprop}
+\newmdtheoremenv[nobreak=true]{corollary}[theorem]{\lblcorollary}
+\newmdtheoremenv[nobreak=true]{law}[theorem]{\lbllaw}
+\newmdtheoremenv[nobreak=true]{postulate}[theorem]{\lblpostulate}
+\newmdtheoremenv{conclusion}[theorem]{\lblconclusion}
+\newmdtheoremenv{bonus}[theorem]{\lblbonus}
+\newmdtheoremenv{conjecture}[theorem]{\lblconjecture}
+
+% Unboxed, unnumbered environments
+\newtheorem*{example}{\lblexample}
+% A counter-example: something that looks like it should qualify but doesn't.
+\newtheorem*{unexample}{\lblunexample}
+% Backwards-compatible alias for the old, abbreviated name.
+\newenvironment{eg}{\begin{example}}{\end{example}}
+\newtheorem*{notation}{\lblnotation}
+\newtheorem*{previouslyseen}{\lblpreviouslyseen}
+\newtheorem*{recap}{\lblrecap}
+\newtheorem*{intermezzo}{\lblintermezzo}
+\newtheorem*{remark}{\lblremark}
+\newtheorem*{note}{\lblnote}
+\newtheorem*{observe}{\lblobserve}
+\newtheorem*{intuition}{\lblintuition}
+\newtheorem*{practical}{\lblpractical}
+\newtheorem*{problem}{\lblproblem}
+\newtheorem*{terminology}{\lblterminology}
+\newtheorem*{application}{\lblapplication}
+\newtheorem*{exercisebox}{\lblexercise}
+\newtheorem*{question}{\lblquestion}
+
+% End example and intermezzo environments with a small diamond (just like proof
+% environments end with a small square)
+\usepackage{etoolbox}
+\AtEndEnvironment{example}{\null\hfill$\diamond$}%
+\AtEndEnvironment{unexample}{\null\hfill$\diamond$}%
+\AtEndEnvironment{intermezzo}{\null\hfill$\diamond$}%
+% \AtEndEnvironment{remark}{\null\hfill$\diamond$}%
+
+% Fix some spacing
+% http://tex.stackexchange.com/questions/22119/how-can-i-change-the-spacing-before-theorems-with-amsthm
+\def\thm@space@setup{%
+  \thm@preskip=0pt \thm@postskip=0pt
+}
+
+
+% Exercise-sheet answer structure: one explicit command per level, matching a
+% typical sheet. You pass the number/letter and the command formats + indents it,
+% so the code says exactly which (sub)exercise each block is — no counting.
+%   \exercise{1}        -> 1.   (left margin)
+%   \subexercise{a}     -> (a)  (indented one level)
+%   \subsubexercise{i}  -> i.   (indented two levels)
+% Write the answer right after the command; wrapped lines hang under the text.
+% Note: these set \leftskip, so exercises should be the last content in the doc; if
+% you add more afterwards (e.g. \printbibliography), precede it with \par\leftskip=0pt.
+\newcommand{\ajexitem}[2]{% #1 = label position (base indent), #2 = formatted label
+    \par\addvspace{\smallskipamount}%
+    \leftskip=\dimexpr#1+2em\relax
+    \noindent\hspace{-2em}\makebox[2em][l]{#2}\ignorespaces}
+\newcommand{\exercise}[1]{\par\addvspace{\medskipamount}\ajexitem{0em}{#1.}}
+\newcommand{\subexercise}[1]{\ajexitem{2em}{(#1)}}
+\newcommand{\subsubexercise}[1]{\ajexitem{4em}{#1.}}
+
+
+% \lecture starts a new lecture
+%
+% Usage:
+% \lecture{1}{2026-06-11}{Introduction}
+%
+% Adds a section heading with the number / title of the lecture and a margin
+% paragraph with the date. The date is stored language-neutrally as YYYY-MM-DD and
+% formatted below, so it localizes automatically with the package language option.
+
+\usepackage{pgfcalendar}  % for computing the weekday from a date
+
+% Format an ISO date (YYYY-MM-DD) as "<weekday> <day>. <month> <year>" in the
+% current language, e.g. "Thu 11. Jun 2026" / "Do 11. Jun 2026". \ajweekday and
+% \ajmonth are the localized name tables defined in the language block above.
+\newcount\ajjulian \newcount\ajwday
+\def\ajparsedate#1-#2-#3\relax{\def\ajyy{#1}\def\ajmm{#2}\def\ajdd{#3}}
+\newcommand{\ajlecturedate}[1]{%
+    \ajparsedate#1\relax
+    \pgfcalendardatetojulian{#1}{\ajjulian}%
+    \pgfcalendarjuliantoweekday{\ajjulian}{\ajwday}%
+    \ajweekday{\ajwday}\space\the\numexpr\ajdd\relax.\space\ajmonth{\ajmm}\space\ajyy
+}
+
+\def\@lecture{}%
+\newcommand{\lecture}[3]{
+    % Format: "N  Lecture: Title", mimicking a numbered (sub)section heading —
+    % the number, then a \quad gap (as LaTeX uses after section numbers), no dot.
+    \ifstrempty{#3}{%
+        \def\@lecture{#1\quad\lbllecture}%
+    }{%
+        \def\@lecture{#1\quad\lbllecture: #3}%
+    }%
+    % The date sits flush-right on the heading line, ending at the text's right
+    % margin (not out in the page margin). \normalfont\small so it isn't bold/large
+    % like the heading; \frenchspacing so the '.' after the day-of-month (e.g.
+    % "11. Jun") gets normal spacing; \mbox keeps the date on one line.
+    \subsection*{\@lecture\hfill
+        {\normalfont\small\textsf{\frenchspacing\mbox{\ajlecturedate{#2}}}}}
+}
+
+
+
+% These are the fancy headers.
+\usepackage{fancyhdr}
+\usepackage{trimclip}  % \clipbox, for truncating an overlong header
+\pagestyle{fancy}
+\fancyhf{}  % clear all header/footer fields (incl. the package's default page no.)
+
+% Header: author's name on the left (handy e.g. for open-book exam prints; we
+% can't use \@author here because \maketitle wipes it after the title page) and
+% the current section on the right.
+%
+% Both are typeset at natural width, so a long section title would run left and
+% overprint the name. \ajheader measures the two and degrades in three steps:
+%
+%   1. both fit       -> full name, full title
+%   2. too wide       -> abbreviate the name (initials + surname, then initials)
+%   3. still too wide -> drop the name; if the title alone still overflows,
+%                        truncate it with an ellipsis
+%
+% \ajheadergap is the minimum space kept between name and title.
+\newlength{\ajheadergap}
+\setlength{\ajheadergap}{1.5em}
+\newsavebox{\ajheadbox}
+\newlength{\ajheadwd}
+\newlength{\ajtitlewd}
+\newlength{\ajavail}
+
+\makeatletter
+% Width of #2 once typeset, stored in the length #1.
+\newcommand{\aj@measure}[2]{\sbox{\ajheadbox}{#2}\setlength{#1}{\wd\ajheadbox}}
+
+% Walk a space-separated name. \aj@short keeps the last word in full
+% ("A. J. P. Ferreira"); \aj@inits abbreviates every word ("A. J. P. F.").
+% The argument is expanded first (\authorname is a macro, so the loop would
+% otherwise see one token instead of the words), and the recursion stops on a
+% sentinel rather than on an emptiness test.
+% The list is terminated by a trailing space, so the tail #2 is empty exactly
+% on the last word; \aj@ifempty tests that without expanding anything.
+\long\def\aj@ifempty#1{%
+    \romannumeral-`\q\aj@ifemptyA#1\aj@nilA\aj@nilB\aj@nilC}
+\long\def\aj@ifemptyA#1\aj@nilA#2\aj@nilC{%
+    \ifx\relax#1\relax\expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
+\def\aj@short#1{\expandafter\aj@shortA#1 \@nil}
+\def\aj@shortA#1 #2\@nil{%
+    \aj@ifempty{#2}{#1}{\aj@ini{#1}\aj@shortA#2\@nil}}
+\def\aj@inits#1{\expandafter\aj@initA#1 \@nil}
+\def\aj@initA#1 #2\@nil{%
+    \aj@ini{#1}\aj@ifempty{#2}{}{\aj@initA#2\@nil}}
+% First letter of #1, followed by a full stop and a space.
+\def\aj@ini#1{\aj@iniA#1\@nil}
+\def\aj@iniA#1#2\@nil{#1.\space}
+
+% Does `name + gap + title' fit in \headwidth?
+\newif\ifaj@fits
+\newcommand{\aj@try}[1]{%
+    \aj@measure{\ajheadwd}{#1}%
+    \ifdim\dimexpr\ajheadwd+\ajtitlewd+\ajheadergap\relax<\headwidth
+        \aj@fitstrue\else\aj@fitsfalse\fi}
+
+\newcommand{\ajheader}{%
+    \begingroup
+    % Don't expand \leftmark: it carries \@mkboth material with parameter
+    % tokens, which would break \edef. Just alias it and typeset it twice.
+    \def\aj@ttl{\nouppercase{\leftmark}}%
+    \aj@measure{\ajtitlewd}{\aj@ttl}%
+    \aj@try{\authorname}%
+    \ifaj@fits
+        \authorname\hfill\aj@ttl
+    \else
+        \aj@try{\aj@short{\authorname}}%
+        \ifaj@fits
+            \aj@short{\authorname}\hfill\aj@ttl
+        \else
+            \aj@try{\aj@inits{\authorname}}%
+            \ifaj@fits
+                \aj@inits{\authorname}\hfill\aj@ttl
+            \else
+                % No room for a name at all.
+                \ifdim\ajtitlewd<\headwidth
+                    \hfill\aj@ttl
+                \else
+                    % Truncate: set the title on one line in a box of the
+                    % available width and clip the overflow, then add an
+                    % ellipsis. \hss lets the long line stick out of the box
+                    % without a warning; the clip keeps it off the page edge.
+                    % Clip the right-hand overflow, then append an ellipsis.
+                    % \clipbox wants plain lengths, so compute the cut first.
+                    \aj@measure{\ajavail}{\dots}%
+                    \setlength{\ajavail}{\dimexpr\headwidth-\ajavail\relax}%
+                    \setlength{\ajheadwd}{\dimexpr\ajtitlewd-\ajavail\relax}%
+                    \clipbox{0pt 0pt \ajheadwd{} 0pt}{\hbox{\aj@ttl}}\dots
+                \fi
+            \fi
+        \fi
+    \fi
+    \endgroup}
+\makeatother
+
+% One full-width field: \hbox to \headwidth lets the \hfill inside \ajheader
+% push the title to the right margin. (\makebox would centre the content and
+% swallow the glue.)
+\fancyhead[L]{}%
+\fancyhead[R]{}%
+\fancyhead[C]{\hbox to \headwidth{\ajheader}}
+\fancyfoot[R]{\thepage}
+
+% \maketitle (and similar) switch to the 'plain' page style, which by default
+% centers the page number. Redefine it to match 'fancy': page number bottom
+% right, no header, so numbering is consistent on every page.
+\fancypagestyle{plain}{%
+    \fancyhf{}%
+    \fancyfoot[R]{\thepage}%
+    \renewcommand{\headrulewidth}{0pt}%
+}
+
+
+
+
+% Todonotes for margin TODO annotations while drafting: \todo{...} and
+% \listoftodos.
+\usepackage{todonotes}
+
+
+
+
+% Figure support as explained in my blog post.
+\usepackage{import}
+\usepackage{pdfpages}
+\usepackage{transparent}
+% Include an Inkscape figure exported with "omit text in PDF": the drawing comes
+% from the .pdf, the labels are typeset here by LaTeX.
+%
+% Labels are wrapped by Inkscape in \makebox/tabular, where display math ($$...$$
+% or \[...\]) is not allowed — it errors with "Missing $ inserted". So \everymath
+% switches figure labels to \displaystyle instead: fractions, sums and integrals
+% get their full-size form while staying inline math. The group keeps this local
+% to the figure, and a label that wants the cramped form can still say
+% \textstyle explicitly.
+\newcommand{\incfig}[1]{%
+    \begingroup%
+    \everymath{\displaystyle}%
+    \def\svgwidth{\columnwidth}%
+    \import{./figures/}{#1.pdf_tex}%
+    \endgroup%
+}
+
+% Fix some stuff
+% %http://tex.stackexchange.com/questions/76273/multiple-pdfs-with-page-group-included-in-a-single-page-warning
+\pdfsuppresswarningpagegroup=1
+
+
+% Additions
+
+\usepackage{derivative}
+\usepackage{gensymb}
+\usepackage{changepage}
+
+% Bibliography system.
+% hyperref must be loaded BEFORE biblatex so citations/links work correctly.
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{csquotes}
+\usepackage[
+  style=ieee,
+  sorting=none,
+  giveninits=true,
+  backend=biber
+]{biblatex}
+% No bibliography file is bound here. To add one, put \addbibresource{your.bib}
+% in the document's main.tex (after \usepackage[...]{ajnotes}), then \cite / print it.
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldsource=url, final=true]
+      \step[fieldset=verba, origfieldval, final=true]
+      \step[fieldsource=verba, match=\regexp{\A(ht|f)tp(s)?:\/\/}, replace={}]
+    }
+  }
+}
+\DeclareFieldFormat{url}{%
+  \bibstring{url}\addcolon\space
+  \href{#1}{\nolinkurl{\thefield{verba}}}%
+}
+
+\DeclarePairedDelimiter{\p}{(}{)}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+% Integral evaluation: square brackets sized to their contents, with the limits
+% written after the closing brace as super/subscripts.
+%
+%   \int_a^b f'(x) \dif x = \eval{f(x)}_a^b
+%   \eval{\frac{x^2}{2}}_0^1 = \frac{1}{2}
+%
+% \left...\right scales the brackets, and the invisible \rule underneath sets a
+% floor on that: on its own \left[ hugs short contents like f(x) far too closely
+% for an evaluation bar. The floor is exactly \bigl[...\bigr], measured from the
+% document's own font at \begin{document} so it follows the point size. Short
+% contents therefore come out \big-sized; taller ones keep growing past it.
+\newlength{\ajevalht}\newlength{\ajevaldp}
+\AtBeginDocument{%
+    \settoheight{\ajevalht}{$\bigl[\bigr]$}%
+    \settodepth{\ajevaldp}{$\bigl[\bigr]$}}
+\newcommand{\eval}[1]{%
+    \left[\vphantom{\rule[-\ajevaldp]{0pt}{\dimexpr\ajevalht+\ajevaldp\relax}}#1\right]}
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+
+% Author name, shown on the title page and in the running header, plus the other
+% per-person settings. Rather than editing this file (which is in the repository),
+% put them in a private env.tex:
+%
+%   \renewcommand{\authorname}{Your Name}
+%   \renewcommand{\ajgermanvariant}{ngerman}    % babel dialect; def. nswissgerman
+%   \renewcommand{\ajenglishvariant}{british}   % babel dialect; def. american
+%   \renewcommand{\ajgermanlocale}{DE}          % siunitx locale; unset by default
+%   \renewcommand{\ajenglishlocale}{UK}         % siunitx locale; unset by default
+%
+% The siunitx locales are opt-in: leave one unset and numbers use the house style
+% (decimal point, comma thousands separator, \cdot exponent). Set one and siunitx's
+% regional preset wins for that language.
+%
+% Two locations are checked, nearest first, so a document or course can override
+% the machine-wide default:
+%
+%   ./env.tex          next to the main.tex being compiled  (per document)
+%   ajnotes/env.tex    beside this .sty, i.e. in TEXMFHOME  (per machine)
+%
+% Both are git-ignored. The second is written as a qualified subpath so it keeps
+% the plain name env.tex without an unrelated file elsewhere on the TeX search
+% path shadowing it. It is read near the top of this file, before babel.
+%
+% With neither present the name falls back to \ajdefaultauthor, and any single
+% document can still override with \author{...} after loading the package.
+\author{\authorname}
+
+% No date on the title page: notes span many lectures, and \maketitle would
+% otherwise print \today (the last compile date), which is misleading. Each
+% lecture's real date is shown in its margin via \lecture. Override per document
+% with \date{...} in main.tex if you ever want one.
+\date{}
