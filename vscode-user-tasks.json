@@ -1,0 +1,174 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "env": { "LATEX_NOTES_ROOT": "${workspaceFolder}" }
+    },
+    "tasks": [
+        {
+            "label": "New course",
+            "detail": "Prompts for a title and language, then creates the course folder with notes/main.tex.",
+            "type": "shell",
+            "command": "python3",
+            "windows": { "command": "py" },
+            "args": [
+                "${userHome}/Projects/ajnotes/scripts/_python.py",
+                "new-course.py",
+                "${input:courseTitle}",
+                "--language",
+                "${input:courseLanguage}"
+            ],
+            "presentation": { "reveal": "always", "close": false, "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "New lecture",
+            "detail": "Adds the next lecture to the course of the file you're editing. Prompts for an optional title (leave blank for none).",
+            "type": "shell",
+            "command": "python3",
+            "windows": { "command": "py" },
+            "args": [
+                "${userHome}/Projects/ajnotes/scripts/_python.py",
+                "new-lecture.py",
+                "--from-file",
+                "${file}",
+                "--title=${input:lectureTitle}"
+            ],
+            "presentation": { "reveal": "always", "close": false, "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Compile course",
+            "detail": "Includes all lectures and compiles the notes of the course of the file you're editing (notes/main.pdf).",
+            "type": "shell",
+            "command": "python3",
+            "windows": { "command": "py" },
+            "args": [
+                "${userHome}/Projects/ajnotes/scripts/_python.py",
+                "compile-course.py",
+                "--from-file",
+                "${file}"
+            ],
+            "presentation": { "reveal": "always", "close": false, "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Compile all courses",
+            "detail": "Includes all lectures and compiles every course's notes.",
+            "type": "shell",
+            "command": "python3",
+            "windows": { "command": "py" },
+            "args": [
+                "${userHome}/Projects/ajnotes/scripts/_python.py",
+                "compile-all-courses.py"
+            ],
+            "presentation": { "reveal": "always", "close": false, "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "New exercise",
+            "detail": "Prompts for a title, then creates a new exercises/ex_NN mini-project in the course of the file you're editing.",
+            "type": "shell",
+            "command": "python3",
+            "windows": { "command": "py" },
+            "args": [
+                "${userHome}/Projects/ajnotes/scripts/_python.py",
+                "new-exercise.py",
+                "--from-file",
+                "${file}",
+                "--title=${input:exerciseTitle}"
+            ],
+            "presentation": { "reveal": "always", "close": false, "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Compile exercise",
+            "detail": "Compiles the standalone document (e.g. exercise) the file you're editing belongs to (main.pdf).",
+            "type": "shell",
+            "command": "python3",
+            "windows": { "command": "py" },
+            "args": [
+                "${userHome}/Projects/ajnotes/scripts/_python.py",
+                "compile-exercise.py",
+                "--from-file",
+                "${file}"
+            ],
+            "presentation": { "reveal": "always", "close": false, "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "New figure",
+            "detail": "Prompts for a figure name, creates it in the project (notes or exercise) of the file you're editing, and opens Inkscape.",
+            "type": "shell",
+            "command": "python3",
+            "windows": { "command": "py" },
+            "args": [
+                "${userHome}/Projects/ajnotes/scripts/_python.py",
+                "new-figure.py",
+                "${input:figureName}",
+                "--from-file",
+                "${file}"
+            ],
+            "presentation": { "reveal": "silent", "close": true, "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Edit figure",
+            "detail": "Open an existing figure of the current project in Inkscape (lists figures if the name doesn't match).",
+            "type": "shell",
+            "command": "python3",
+            "windows": { "command": "py" },
+            "args": [
+                "${userHome}/Projects/ajnotes/scripts/_python.py",
+                "edit-figure.py",
+                "${input:figureName}",
+                "--from-file",
+                "${file}"
+            ],
+            "presentation": { "reveal": "silent", "close": true, "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Watch figures",
+            "detail": "Auto-export figure SVGs to PDF + pdf_tex on save (run once per session).",
+            "type": "shell",
+            "command": "python3",
+            "windows": { "command": "py" },
+            "args": [
+                "${userHome}/Projects/ajnotes/scripts/_python.py",
+                "watch-figures.py"
+            ],
+            "isBackground": true,
+            "presentation": { "reveal": "always", "panel": "dedicated" },
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "figureName",
+            "type": "promptString",
+            "description": "Figure name"
+        },
+        {
+            "id": "exerciseTitle",
+            "type": "promptString",
+            "description": "Exercise title (optional, e.g. \"Sheet 1\")"
+        },
+        {
+            "id": "lectureTitle",
+            "type": "promptString",
+            "description": "Lecture title (optional; leave blank for none)"
+        },
+        {
+            "id": "courseTitle",
+            "type": "promptString",
+            "description": "Course title"
+        },
+        {
+            "id": "courseLanguage",
+            "type": "pickString",
+            "description": "Course language",
+            "options": [ "english", "german" ],
+            "default": "english"
+        }
+    ]
+}
