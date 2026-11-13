@@ -1,0 +1,29 @@
+# Python bytecode caches
+__pycache__/
+*.py[cod]
+
+# macOS / editor cruft
+.DS_Store
+*.swp
+
+# LaTeX build output (should never appear in the toolkit, but keeps stray
+# test builds out of commits)
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+.aux/
+
+# Private author name / per-machine settings (see \authorname in ajnotes.sty)
+env.tex
+
+# Google Calendar credentials for countdown.py — never commit these
+credentials.json
+token.pickle
